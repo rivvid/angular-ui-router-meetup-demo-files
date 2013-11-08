@@ -1,0 +1,24 @@
+<div class="row">
+
+	<div class="span4" ng-controller="CategoriesCtrl">
+		<p><a ui-sref="category">Back to 'category' default</a></p>
+		<ul>
+			<li ng-repeat="category in categories">
+				<a ui-sref="category.detail({ slug: category.slug })" ng-class="{ 'active': (category.slug == currentCategorySlug) }">{{ category.name }}</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="span8" ng-controller="ItemsCtrl">
+
+		<h3 ng-show="!items[currentCategorySlug].length">No category selected!</h3>
+
+		<ul ng-show="!!items[currentCategorySlug].length">
+			<li ng-repeat="item in items[currentCategorySlug]">
+				{{ item.name }}
+			</li>
+		</ul>
+			
+	</div>
+
+</div>

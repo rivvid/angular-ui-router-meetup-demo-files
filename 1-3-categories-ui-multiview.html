@@ -1,0 +1,109 @@
+<!doctype html>
+<html ng-app="uiRouteExample">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+        a.active { color: red; }
+    </style>
+</head>
+
+<body>
+    
+    <div ui-view="" class="container"></div>
+
+
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <!-- here we'll use the ui router instead -->
+    <script src="js/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
+
+    <script type="text/javascript">
+    var app = angular.module('uiRouteExample',['ui.router']);
+    
+    app.config(
+        ['$stateProvider','$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.when('/category/*', ['$stateParams', function ($stateParams) {
+                console.log(arguments);
+            }]);
+            // setup a default route
+            $urlRouterProvider.otherwise('/category');
+            // configure our states
+            $stateProvider
+                .state('category', { 
+                    url: '/category'
+                    ,views: {
+                        '@': {
+                            templateUrl: 'views/categories/uirouter/combined.html' 
+                        }
+                        ,'categories-list@category': {
+                            templateUrl: 'views/categories/uirouter/categories-list.html'
+                        }
+                        ,'category-items@category': {
+                            templateUrl: 'views/categories/uirouter/category-items.html'
+                        }                        
+                    }
+                })                    
+                    .state('category.detail', {
+                        url: '/:slug'
+                    })
+                ;
+        }]);
+
+    app.controller(
+        'CategoriesCtrl',
+        ['$scope','$state',
+        function ($scope, $state) {
+            console.log('Hi from CategoriesCtrl');
+            // hardcode some categories
+            $scope.categories = [
+                { slug: 'one', name: 'One' }
+                ,{ slug: 'two', name: 'Two' }
+                ,{ slug: 'three', name: 'Three' }
+            ];
+            $scope.state = $state;
+            $scope.$watch('state.params', function (new_val, old_val) {
+                $scope.currentCategorySlug = new_val.slug;
+            });
+        }]);
+
+    app.controller(
+        'ItemsCtrl',
+        ['$scope','$state',
+        function ($scope, $state) {
+            console.log('Hi from ItemsCtrl');
+            // hardcode some items
+            $scope.items = {
+                'one': [
+                    { name: 'Category One Item One' }
+                    ,{ name: 'Category One Item Two' }
+                ]
+                ,'two': [
+                    { name: 'Category Two Item One' }
+                    ,{ name: 'Category Two Item Two' }
+                    ,{ name: 'Category Two Item Three' }
+                ]
+                ,'three': [
+                    { name: 'Category Three Item One' }
+                    ,{ name: 'Category Three Item Two' }
+                    ,{ name: 'Category Three Item Three' }
+                ]
+            }
+            $scope.state = $state;
+            $scope.$watch('state.params', function (new_val, old_val) {
+                $scope.currentCategorySlug = new_val.slug;
+            });
+        }]);
+
+    </script>
+
+</body>
+</html>

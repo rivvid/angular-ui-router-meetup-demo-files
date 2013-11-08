@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app="uiRouteExample">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+        a.active { color: red; }
+        nav ul li { float: left; list-style: none; margin-right: 30px; }
+        nav ul li a { cursor: pointer; }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container" ng-controller="NavCtrl">
+        <nav class="clearfix">
+            <ul>
+                <li><a ui-sref="users" ng-class="{ 'active': (currentState == 'users') }">Users</a></li>
+                <li><a ui-sref="things" ng-class="{ 'active': (currentState == 'things') }">Things</a></li>
+                <li><a ui-sref="posts" ng-class="{ 'active': (currentState == 'posts') }">Posts</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div ui-view="" class="container"></div>
+
+
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <!-- here we'll use the ui router instead -->
+    <script src="js/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
+
+    <script type="text/javascript">
+    var app = angular.module('uiRouteExample',['ui.router']);
+    
+    app.config(
+        ['$stateProvider','$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.when('/category/*', ['$stateParams', function ($stateParams) {
+                console.log(arguments);
+            }]);
+            // configure our states
+            $stateProvider
+                .state('none', { 
+                    abstract: true
+                }) 
+                .state('users', { 
+                    templateUrl: 'views/misc/users.html'
+                })                    
+                .state('things', { 
+                    templateUrl: 'views/misc/things.html'
+                })
+                .state('posts', { 
+                    templateUrl: 'views/misc/posts.html'
+                })
+                ;
+        }]);
+
+    app.controller(
+        'NavCtrl',
+        ['$scope','$state',
+        function ($scope, $state) {
+            $scope.state = $state;
+            $scope.$watch('state.current', function (new_val, old_val) {
+                $scope.currentState = new_val.name;
+            });
+        }]);
+
+    </script>
+
+</body>
+</html>

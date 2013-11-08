@@ -1,0 +1,8 @@
+<div class="span4" ng-controller="CategoriesCtrl">
+	<p><a ui-sref="category">Back to 'category' default</a></p>
+	<ul>
+		<li ng-repeat="category in categories">
+			<a ui-sref="category.detail({ slug: category.slug })" ng-class="{ 'active': (category.slug == currentCategorySlug) }">{{ category.name }}</a>
+		</li>
+	</ul>
+</div>

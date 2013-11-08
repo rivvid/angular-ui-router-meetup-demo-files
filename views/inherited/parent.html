@@ -1,0 +1,14 @@
+<div class="row">
+
+	<div class="span4">
+		<p><a ui-sref="parent">Back to 'category' default</a></p>
+		<ul>
+			<li ng-repeat="category in categories">
+				<a ui-sref="parent.child({ slug: category.slug })" ng-class="{ 'active': (category.slug == state.params.slug) }">{{ category.name }}</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="span8" ui-view=""></div>
+
+</div>

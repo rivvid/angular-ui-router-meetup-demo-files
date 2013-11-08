@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="uiRouteExample">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+        a.active { color: red; }
+    </style>
+</head>
+
+<body>
+    
+    <div ui-view="" class="container"></div>
+
+
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <!-- here we'll use the ui router instead -->
+    <script src="js/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
+
+    <script type="text/javascript">
+    var app = angular.module('uiRouteExample',['ui.router']);
+    
+    app.config(
+        ['$stateProvider','$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
+           
+            // setup a default route
+            $urlRouterProvider.otherwise('/parent');
+            
+            // configure our states
+            $stateProvider
+                .state('parent', { 
+                    url: '/parent'
+                    ,data: {
+                        section: 'Users'
+                    }
+                    ,templateUrl: 'views/inherited/parent.html' 
+                    ,controller: function ($scope, $state) {
+                        $scope.categories = [
+                            { slug: 'one', name: 'One' }
+                            ,{ slug: 'two', name: 'Two' }
+                            ,{ slug: 'three', name: 'Three' }
+                        ];
+                        $scope.items = {
+                            'one': [
+                                { name: 'Category One Item One' }
+                                ,{ name: 'Category One Item Two' }
+                            ]
+                            ,'two': [
+                                { name: 'Category Two Item One' }
+                                ,{ name: 'Category Two Item Two' }
+                                ,{ name: 'Category Two Item Three' }
+                            ]
+                            ,'three': [
+                                { name: 'Category Three Item One' }
+                                ,{ name: 'Category Three Item Two' }
+                                ,{ name: 'Category Three Item Three' }
+                            ]
+                        }
+                        //
+                        $scope.state = $state;
+                    }
+                })                    
+                    .state('parent.child', {
+                        url: '/:slug'
+                        ,data: {
+                            section: 'Users'
+                        }
+                        ,templateUrl: 'views/inherited/child.html'
+                        ,controller: function ($scope, $state) {
+                            $scope.currentItems = $scope.items[$state.params.slug];
+                        }
+                    })
+                ;
+        }]);
+
+
+    </script>
+
+</body>
+</html>

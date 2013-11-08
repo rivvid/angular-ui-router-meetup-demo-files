@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Angular UI-Router discussion</title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+        a.active { color: red; }
+    </style>
+</head>
+
+<body>
+
+    
+    <div class="container">
+
+        <div class="page-header">
+            <h2>Angular UI-Router discussion</h2>
+        </div>
+
+        <div class="row">
+            <p class="alert alert-info">The Angular UI-Router service is available at <a href="https://github.com/angular-ui/ui-router" target="_blank">https://github.com/angular-ui/ui-router</a></p>
+        </div>
+
+        <div class="row">
+            <h3>What is Angular UI-Router?</h3>
+            <p>A service/module that replaces the default Angular router (ngRoute), enabling nested routes, or 'states'.</p>
+            <blockquote style="font-style: italic; margin-top: 30px;">
+                <p style="margin-bottom: 20px;">Unlike the $route service in Angular core, which is organized around URL routes, UI-Router is organized around states, which may optionally have routes, as well as other behavior, attached.</p>
+                <p>States are bound to named, nested and parallel views, allowing you to powerfully manage your application's interface.</p>
+            </blockquote>
+        </div>
+
+        <div class="row">
+            <h3>Examples</h3>
+
+            <ol>
+                <li>
+                    <h5><a href="1-1-categories-ng.html" target="_blank">Old-school angular ngRoute method</a></h5>
+                    <p>The key thing to note here is that controllers are re-initialized with every click.</p>
+                </li>
+                <li>
+                    <h5><a href="1-2-categories-ui.html" target="_blank">Replace example 1 with UI-Router</a></h5>
+                    <p>We have removed the errornous controller refreshes.</p>
+                </li>
+                <li>
+                    <h5><a href="1-3-categories-ui-multiview.html" target="_blank">Exploded includes, parent-child templates</a></h5>
+                    <p>We introduce the concept of 'parent/child' views and 'named views' - stark contrast to the limited 'ng-view' directive.</p>
+                </li>
+                <li>
+                    <h5><a href="1-4-no-urls.html" target="_blank">Navigating/activating states without URL's</a></h5>
+                    <p>Useful for widget-type interactions or states that do not necessarily require a url/deeplink</p>
+                </li>
+                <li>
+                    <h5><a href="1-5-inherit-scope.html" target="_blank">Inherited $scope</a></h5>
+                    <p>Parent state controllers can pass $scope object down to child states controllers</p>
+                </li>
+            </ol>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

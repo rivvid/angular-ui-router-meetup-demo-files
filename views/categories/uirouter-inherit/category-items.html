@@ -1,0 +1,11 @@
+<div class="span8">
+
+	<h3 ng-show="!items[currentCategorySlug].length">No category selected!</h3>
+
+	<ul ng-show="!!items[currentCategorySlug].length">
+		<li ng-repeat="item in items[currentCategorySlug]">
+			{{ item.name }}
+		</li>
+	</ul>
+		
+</div>

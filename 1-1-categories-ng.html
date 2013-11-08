@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="ngRouteExample">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body { margin: 20px; }
+        a.active { color: red; }
+    </style>
+</head>
+
+<body>
+
+    
+    <div ng-view="" class="container"></div>
+
+
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <!-- the standard angular router (required as separate include since 1.2) -->
+    <script src="js/vendor/angular-route/angular-route.min.js"></script>
+    
+
+    <script type="text/javascript">
+    var app = angular.module('ngRouteExample',['ngRoute']);
+    
+    app.config(
+        ['$routeProvider',
+        function ($routeProvider) {
+            $routeProvider
+                .when('/category/:slug?', { templateUrl: 'views/categories/ngroute/index.html' })
+                .otherwise({ redirectTo: '/category' });
+        }]);
+
+    app.controller(
+        'CategoriesCtrl',
+        ['$scope','$routeParams',
+        function ($scope, $routeParams) {
+            console.log('Hi from CategoriesCtrl');
+            // hardcode some categories
+            $scope.categories = [
+                { slug: 'one', name: 'One' }
+                ,{ slug: 'two', name: 'Two' }
+                ,{ slug: 'three', name: 'Three' }
+            ];
+            $scope.currentCategorySlug = $routeParams.slug;
+        }]);
+
+    app.controller(
+        'ItemsCtrl',
+        ['$scope','$routeParams',
+        function ($scope, $routeParams) {
+            console.log('Hi from ItemsCtrl');
+            // hardcode some items
+            $scope.items = {
+                'one': [
+                    { name: 'Category One Item One' }
+                    ,{ name: 'Category One Item Two' }
+                ]
+                ,'two': [
+                    { name: 'Category Two Item One' }
+                    ,{ name: 'Category Two Item Two' }
+                    ,{ name: 'Category Two Item Three' }
+                ]
+                ,'three': [
+                    { name: 'Category Three Item One' }
+                    ,{ name: 'Category Three Item Two' }
+                    ,{ name: 'Category Three Item Three' }
+                ]
+            }
+            $scope.currentCategorySlug = $routeParams.slug;
+        }]);
+
+    </script>
+
+</body>
+</html>
